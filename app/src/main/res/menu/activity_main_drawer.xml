@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="@string/nav_menuTitle">
+        <menu>
+            <item
+                android:id="@+id/navAppetizers"
+                android:icon="@drawable/appetizer"
+                android:title="@string/nav_appetizers" />
+            <item
+                android:id="@+id/navMontaditos"
+                android:icon="@drawable/sandwich"
+                android:title="@string/nav_montaditos" />
+            <item
+                android:id="@+id/navSalads"
+                android:icon="@drawable/salad"
+                android:title="@string/nav_salads" />
+            <item
+                android:id="@+id/navDrinks"
+                android:icon="@drawable/soda"
+                android:title="@string/nav_drinks" />
+            <item
+                android:id="@+id/navAlcohol"
+                android:icon="@drawable/beer"
+                android:title="@string/nav_alcohol" />
+            <item
+                android:id="@+id/navDesserts"
+                android:icon="@drawable/dessert"
+                android:title="@string/nav_desserts" />
+
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navTotal"
+            android:icon="@drawable/bill"
+            android:title="@string/nav_Total" />
+        <item
+            android:id="@+id/navSettings"
+            android:icon="@drawable/settings"
+            android:title="@string/nav_settings" />
+    </group>
+
+
+
+</menu>

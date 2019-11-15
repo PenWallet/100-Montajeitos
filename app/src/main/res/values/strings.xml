@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">100 Montajeitos</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">100 Montajeitos</string>
+    <string name="nav_header_subtitle">Your montadito of quality</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="nav_montaditos">Montaditos</string>
+    <string name="nav_menuTitle">Menu</string>
+    <string name="nav_Total">Total</string>
+    <string name="nav_alcohol">Alcoholic Drinks</string>
+    <string name="nav_drinks">Drinks</string>
+    <string name="nav_salads">Salads</string>
+    <string name="nav_appetizers">Appetizers</string>
+    <string name="nav_desserts">Desserts</string>
+    <string name="nav_settings">Settings</string>
+
+    <string name="error_noClients">You can\'t perform this action without any clients</string>
+</resources>
