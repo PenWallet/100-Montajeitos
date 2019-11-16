@@ -17,5 +17,10 @@
     <string name="nav_desserts">Desserts</string>
     <string name="nav_settings">Settings</string>
 
+    <string name="dialog_title">Who wants %1$s?</string>
+    <string name="dialog_txt_chosenDiners">Diners who want it:</string>
+    <string name="dialog_accept">Accept</string>
+    <string name="dialog_cancel">Cancel</string>
+
     <string name="error_noClients">You can\'t perform this action without any clients</string>
 </resources>

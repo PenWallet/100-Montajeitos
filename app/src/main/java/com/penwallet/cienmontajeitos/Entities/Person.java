@@ -15,4 +15,20 @@ public class Person {
         this.items = new HashMap<>();
         this.name = "";
     }
+
+    public HashMap<Item, Integer> getItems() {
+        return items;
+    }
+
+    public void setItems(HashMap<Item, Integer> items) {
+        this.items = items;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
