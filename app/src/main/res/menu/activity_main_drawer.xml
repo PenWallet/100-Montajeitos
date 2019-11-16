@@ -6,7 +6,7 @@
     <item android:title="@string/nav_menuTitle">
         <menu>
             <item
-                android:id="@+id/navAppetizers"
+                android:id="@+id/nav_appetizers"
                 android:icon="@drawable/appetizer"
                 android:title="@string/nav_appetizers" />
             <item
@@ -35,9 +35,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navTotal"
+            android:id="@+id/nav_total"
             android:icon="@drawable/bill"
-            android:title="@string/nav_Total" />
+            android:title="@string/nav_total" />
         <item
             android:id="@+id/navSettings"
             android:icon="@drawable/settings"

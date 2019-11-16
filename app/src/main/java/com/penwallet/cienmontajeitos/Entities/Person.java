@@ -1,6 +1,7 @@
 package com.penwallet.cienmontajeitos.Entities;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Person {
     private HashMap<Item, Integer> items;
@@ -30,5 +31,14 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getTotalPriceItems(boolean useEuromaniaPrices)
+    {
+        double totalPrice = 0;
+        for (Map.Entry<Item, Integer> entry : items.entrySet()) {
+            totalPrice += (useEuromaniaPrices ? entry.getKey().getPriceEuromania() : entry.getKey().getPrice()) * entry.getValue();
+        }
+        return totalPrice;
     }
 }

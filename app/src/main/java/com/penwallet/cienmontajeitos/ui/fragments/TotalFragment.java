@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ExpandableListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,17 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.penwallet.cienmontajeitos.Adapters.MenuItemAdapter;
-import com.penwallet.cienmontajeitos.Entities.Item;
+import com.penwallet.cienmontajeitos.Adapters.TotalAdapter;
 import com.penwallet.cienmontajeitos.MenuItemType;
 import com.penwallet.cienmontajeitos.MenuItemsData;
 import com.penwallet.cienmontajeitos.R;
 import com.penwallet.cienmontajeitos.ui.viewmodel.SharedViewModel;
 
-import java.util.ArrayList;
-
-import me.gujun.android.taggroup.TagGroup;
-
-public class AppetizersFragment extends Fragment {
+public class TotalFragment extends Fragment {
 
     private SharedViewModel sharedViewModel;
     private RecyclerView recyclerView;
@@ -33,20 +29,13 @@ public class AppetizersFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_appetizers, container, false);
+        View view = inflater.inflate(R.layout.fragment_total, container, false);
 
         sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        ExpandableListView expandableListView = view.findViewById(R.id.total_expandableList);
 
-        recyclerView = view.findViewById(R.id.appetizers_recyclerlistview);
-
-        //Setting up the recycler view
-        adapter = new MenuItemAdapter(MenuItemsData.appetizers, sharedViewModel);
-        layoutManager = new LinearLayoutManager(getContext());
-
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        expandableListView.setAdapter(new TotalAdapter(getContext(), sharedViewModel));
 
         return view;
     }
-
 }

@@ -25,18 +25,18 @@ import com.penwallet.cienmontajeitos.R;
 import com.penwallet.cienmontajeitos.ui.viewmodel.SharedViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import me.gujun.android.taggroup.TagGroup;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuItemViewHolder> {
 
     private Item[] items;
-    private MenuItemType menuItemType;
     private SharedViewModel viewModel;
 
-    public MenuItemAdapter(Item[] items, MenuItemType menuItemType, SharedViewModel viewModel) {
+    public MenuItemAdapter(Item[] items, SharedViewModel viewModel) {
         this.items = items;
-        this.menuItemType = menuItemType;
         this.viewModel = viewModel;
     }
 
@@ -62,7 +62,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
             holder.txtPrice.setText(item.getPrice()+" €");
 
         //Dependiendo del tipo de item, se cambia la imagen y se esconde el ID
-        switch (menuItemType)
+        switch(items[position].getMenuItemType())
         {
             case MONTADITO:
                 holder.txtId.setText(Integer.toString(item.getMenuId()));
@@ -105,34 +105,49 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
                     final LinearLayout selDinLinearLayout = tagView.findViewById(R.id.dialog_linearLayoutSelectedDiners);
                     final TagGroup selectedTags = tagView.findViewById(R.id.dialog_selectedDinersTags);
 
-                    final ArrayList<String> unselectedDinersNames = viewModel.getClientsNames();
-                    final ArrayList<String> selectedDinersNames = new ArrayList<>();
-                    unselectedTags.setTags(unselectedDinersNames);
+                    final ArrayList<String> allDinersNames = viewModel.getClientsNames();
+                    final HashMap<String, Integer> selectedDiners = new HashMap<>();
+                    unselectedTags.setTags(allDinersNames);
 
                     unselectedTags.setOnTagClickListener(new TagGroup.OnTagClickListener() {
                         @Override
                         public void onTagClick(String tag) {
-                            if(selectedDinersNames.isEmpty())
+                            ArrayList<String> selectedNames = new ArrayList<>();
+                            if(selectedDiners.isEmpty())
                                 selDinLinearLayout.setVisibility(View.VISIBLE);
 
-                            selectedDinersNames.add(tag);
-                            unselectedDinersNames.remove(tag);
+                            if(selectedDiners.containsKey(tag))
+                                selectedDiners.put(tag, selectedDiners.get(tag)+1);
+                            else
+                                selectedDiners.put(tag, 1);
 
-                            unselectedTags.setTags(unselectedDinersNames);
-                            selectedTags.setTags(selectedDinersNames);
+                            for (Map.Entry<String, Integer> entry : selectedDiners.entrySet()) {
+                                selectedNames.add(entry.getValue() == 1 ? entry.getKey() : entry.getKey()+"("+entry.getValue()+")");
+                            }
+
+                            selectedTags.setTags(selectedNames);
                         }
                     });
 
                     selectedTags.setOnTagClickListener(new TagGroup.OnTagClickListener() {
                         @Override
                         public void onTagClick(String tag) {
-                            unselectedDinersNames.add(tag);
-                            selectedDinersNames.remove(tag);
+                            ArrayList<String> selectedNames = new ArrayList<>();
+                            if(!selectedDiners.containsKey(tag))
+                                tag = tag.split("[(]")[0];
 
-                            unselectedTags.setTags(unselectedDinersNames);
-                            selectedTags.setTags(selectedDinersNames);
+                            selectedDiners.put(tag, selectedDiners.get(tag)-1);
 
-                            if(selectedDinersNames.isEmpty())
+                            if(selectedDiners.get(tag) == 0)
+                                selectedDiners.remove(tag);
+
+                            for (Map.Entry<String, Integer> entry : selectedDiners.entrySet()) {
+                                selectedNames.add(entry.getValue() == 1 ? entry.getKey() : entry.getKey()+"("+entry.getValue()+")");
+                            }
+
+                            selectedTags.setTags(selectedNames);
+
+                            if(selectedDiners.isEmpty())
                                 selDinLinearLayout.setVisibility(View.GONE);
                         }
                     });
@@ -153,9 +168,15 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    if(!selectedDinersNames.isEmpty())
+                                    if(!selectedDiners.isEmpty())
                                     {
-                                        Toast.makeText(v.getContext(), items[position].getName()+" lo quieren: "+selectedDinersNames.toString(), Toast.LENGTH_SHORT).show();
+                                        for(Person person : viewModel.getClients().getValue())
+                                        {
+                                            if(selectedDiners.containsKey(person.getName()))
+                                            {
+                                                person.getItems().put(items[position], selectedDiners.get(person.getName()));
+                                            }
+                                        }
                                     }
                                 }
                             })
