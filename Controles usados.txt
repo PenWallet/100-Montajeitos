@@ -1,0 +1,2 @@
+https://android-arsenal.com/details/1/1539
+https://github.com/javiersantos/MaterialStyledDialogs (https://github.com/javiersantos/MaterialStyledDialogs/wiki/Adding-a-custom-view)
