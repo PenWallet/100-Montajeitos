@@ -41,7 +41,7 @@
         <TextView
             android:id="@+id/total_row_body_txtName"
             android:layout_width="wrap_content"
-            android:layout_height="30sp"
+            android:layout_height="wrap_content"
             android:gravity="bottom"
             android:text="Nombre"
             android:textSize="20sp"

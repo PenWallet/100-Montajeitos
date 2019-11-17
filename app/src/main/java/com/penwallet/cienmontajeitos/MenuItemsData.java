@@ -2,8 +2,6 @@ package com.penwallet.cienmontajeitos;
 
 import com.penwallet.cienmontajeitos.Entities.Item;
 
-import java.util.ArrayList;
-
 public class MenuItemsData {
     public static final Item[] appetizers = {
         new Item(0, "Entrante güeno", 4, 1, MenuItemType.APPETIZER),

@@ -1,6 +1,5 @@
 package com.penwallet.cienmontajeitos.ui.fragments;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,30 +9,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.penwallet.cienmontajeitos.Adapters.MenuItemAdapter;
 import com.penwallet.cienmontajeitos.Adapters.TotalAdapter;
 import com.penwallet.cienmontajeitos.Entities.Item;
-import com.penwallet.cienmontajeitos.Entities.Person;
-import com.penwallet.cienmontajeitos.MenuItemType;
-import com.penwallet.cienmontajeitos.MenuItemsData;
 import com.penwallet.cienmontajeitos.R;
 import com.penwallet.cienmontajeitos.ui.viewmodel.SharedViewModel;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 public class TotalFragment extends Fragment {
 
@@ -149,7 +137,7 @@ public class TotalFragment extends Fragment {
             fullOrderText.append(getContext().getResources().getString(R.string.total_collective_salads_caps)+":\n");
             for(Map.Entry<Item, Integer> item : salads.entrySet())
             {
-                fullOrderText.append("\t"+item.getValue()+"x " + item.getKey().getMenuId() + " (" + item.getKey().getName()+")\n");
+                fullOrderText.append("\t"+item.getValue()+"x "+item.getKey().getName()+"\n");
                 fullPrice += (sharedViewModel.getIsEuromania().getValue() ? item.getKey().getPriceEuromania() : item.getKey().getPrice()) * item.getValue();
             }
         }

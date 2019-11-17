@@ -13,8 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Duration;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
@@ -70,8 +68,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
                 holder.image.setImageResource(R.drawable.sandwich);
                 break;
             case SALAD:
-                holder.txtId.setText(Integer.toString(item.getMenuId()));
-                holder.txtId.setVisibility(View.VISIBLE);
+                holder.txtId.setVisibility(View.GONE);
                 holder.image.setImageResource(R.drawable.salad);
                 break;
             case DESSERT:

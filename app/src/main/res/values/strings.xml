@@ -35,6 +35,5 @@
     <string name="total_collective_total_caps">TOTAL</string>
 
 
-
     <string name="error_noClients">You can\'t perform this action without any clients</string>
 </resources>
