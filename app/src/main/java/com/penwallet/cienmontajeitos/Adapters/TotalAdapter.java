@@ -7,7 +7,15 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Duration;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.penwallet.cienmontajeitos.Entities.Item;
 import com.penwallet.cienmontajeitos.Entities.Person;
 import com.penwallet.cienmontajeitos.R;
@@ -82,8 +90,8 @@ public class TotalAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        Map.Entry<Item, Integer> item = (Map.Entry<Item, Integer>)viewModel.getClients().getValue().get(groupPosition).getItems().entrySet().toArray()[childPosition];
+    public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        final Map.Entry<Item, Integer> item = (Map.Entry<Item, Integer>)viewModel.getClients().getValue().get(groupPosition).getItems().entrySet().toArray()[childPosition];
         DecimalFormat df = new DecimalFormat("#0.00");
 
         if (convertView == null) {
@@ -96,7 +104,7 @@ public class TotalAdapter extends BaseExpandableListAdapter {
         TextView txtId = convertView.findViewById(R.id.total_row_body_txtId);
         ImageView image = convertView.findViewById(R.id.total_row_body_image);
 
-        txtName.setText(item.getKey().getName() + "("+item.getValue()+")");
+        txtName.setText(item.getKey().getName() + (item.getValue() == 1 ? "" : " ("+item.getValue()+")"));
         txtPrice.setText(df.format((viewModel.getIsEuromania().getValue() ? item.getKey().getPriceEuromania() : item.getKey().getPrice())*item.getValue())+" €");
 
         //Dependiendo del tipo de item, se cambia la imagen y se esconde el ID
@@ -127,6 +135,34 @@ public class TotalAdapter extends BaseExpandableListAdapter {
                 image.setImageResource(R.drawable.beer);
                 break;
         }
+
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //Now we show the dialog
+                new MaterialStyledDialog.Builder(v.getContext())
+                        .setTitle(v.getResources().getString(R.string.total_dialog_title))
+                        .setDescription(v.getResources().getString(R.string.total_dialog_description, item.getKey().getName(), viewModel.getClients().getValue().get(groupPosition).getName()))
+                        .setPositiveText(R.string.total_dialog_accept)
+                        .setNegativeText(R.string.total_dialog_cancel)
+                        .setStyle(Style.HEADER_WITH_ICON)
+                        .setIcon(R.drawable.delete)
+                        .setHeaderColor(R.color.errorRed)
+                        .setCancelable(true)
+                        .withIconAnimation(true)
+                        .withDialogAnimation(true, Duration.FAST)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                //Toast.makeText(context, "has elegido borrarlo", Toast.LENGTH_SHORT).show();
+                                viewModel.getClients().getValue().get(groupPosition).getItems().remove(item.getKey());
+                                notifyDataSetChanged();
+                            }
+                        })
+                        .show();
+                return false;
+            }
+        });
 
         return convertView;
     }

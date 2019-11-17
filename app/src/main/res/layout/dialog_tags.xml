@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dialog_txt_chosenDiners"/>
+            android:text="@string/menu_dialog_txt_chosenDiners"/>
 
         <me.gujun.android.taggroup.TagGroup
             android:id="@+id/dialog_selectedDinersTags"

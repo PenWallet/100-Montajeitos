@@ -1,7 +1,6 @@
 package com.penwallet.cienmontajeitos.Adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.github.javiersantos.materialstyleddialogs.enums.Duration;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.penwallet.cienmontajeitos.Entities.Item;
 import com.penwallet.cienmontajeitos.Entities.Person;
-import com.penwallet.cienmontajeitos.MenuItemType;
 import com.penwallet.cienmontajeitos.R;
 import com.penwallet.cienmontajeitos.ui.viewmodel.SharedViewModel;
 
@@ -65,14 +63,17 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
         switch(items[position].getMenuItemType())
         {
             case MONTADITO:
+                holder.txtId.setVisibility(View.VISIBLE);
                 holder.txtId.setText(Integer.toString(item.getMenuId()));
                 holder.image.setImageResource(R.drawable.sandwich);
                 break;
             case SALAD:
+                holder.txtId.setVisibility(View.VISIBLE);
                 holder.txtId.setText(Integer.toString(item.getMenuId()));
                 holder.image.setImageResource(R.drawable.salad);
                 break;
             case DESSERT:
+                holder.txtId.setVisibility(View.VISIBLE);
                 holder.txtId.setText(Integer.toString(item.getMenuId()));
                 holder.image.setImageResource(R.drawable.dessert);
                 break;
@@ -154,10 +155,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
 
                     //Now we show the dialog
                     new MaterialStyledDialog.Builder(v.getContext())
-                            .setTitle(v.getResources().getString(R.string.dialog_title, items[position].getName()))
+                            .setTitle(v.getResources().getString(R.string.menu_dialog_title, items[position].getName()))
                             //.setDescription("Has elegido el item "+position+", que es un "+items[position].getName())
-                            .setPositiveText(R.string.dialog_accept)
-                            .setNegativeText(R.string.dialog_cancel)
+                            .setPositiveText(R.string.menu_dialog_accept)
+                            .setNegativeText(R.string.menu_dialog_cancel)
                             .setStyle(Style.HEADER_WITH_ICON)
                             .setIcon(R.drawable.diner)
                             .setHeaderColor(R.color.lightPurple)
@@ -170,11 +171,15 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     if(!selectedDiners.isEmpty())
                                     {
+                                        //TODO: Se puede mejorar, evitando que itere sobre todos si ya se ha añadido el item a los usuarios elegidos
                                         for(Person person : viewModel.getClients().getValue())
                                         {
                                             if(selectedDiners.containsKey(person.getName()))
                                             {
-                                                person.getItems().put(items[position], selectedDiners.get(person.getName()));
+                                                if(person.getItems().containsKey(items[position]))
+                                                    person.getItems().put(items[position], person.getItems().get(items[position])+selectedDiners.get(person.getName()));
+                                                else
+                                                    person.getItems().put(items[position], selectedDiners.get(person.getName()));
                                             }
                                         }
                                     }
