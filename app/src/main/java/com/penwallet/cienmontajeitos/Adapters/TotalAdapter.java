@@ -136,32 +136,29 @@ public class TotalAdapter extends BaseExpandableListAdapter {
                 break;
         }
 
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                //Now we show the dialog
-                new MaterialStyledDialog.Builder(v.getContext())
-                        .setTitle(v.getResources().getString(R.string.total_dialog_title))
-                        .setDescription(v.getResources().getString(R.string.total_dialog_description, item.getKey().getName(), viewModel.getClients().getValue().get(groupPosition).getName()))
-                        .setPositiveText(R.string.total_dialog_accept)
-                        .setNegativeText(R.string.total_dialog_cancel)
-                        .setStyle(Style.HEADER_WITH_ICON)
-                        .setIcon(R.drawable.delete)
-                        .setHeaderColor(R.color.errorRed)
-                        .setCancelable(true)
-                        .withIconAnimation(true)
-                        .withDialogAnimation(true, Duration.FAST)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                //Toast.makeText(context, "has elegido borrarlo", Toast.LENGTH_SHORT).show();
-                                viewModel.getClients().getValue().get(groupPosition).getItems().remove(item.getKey());
-                                notifyDataSetChanged();
-                            }
-                        })
-                        .show();
-                return false;
-            }
+        convertView.setOnLongClickListener(v -> {
+            //Now we show the dialog
+            new MaterialStyledDialog.Builder(v.getContext())
+                    .setTitle(v.getResources().getString(R.string.total_dialog_title))
+                    .setDescription(v.getResources().getString(R.string.total_dialog_description, item.getKey().getName(), viewModel.getClients().getValue().get(groupPosition).getName()))
+                    .setPositiveText(R.string.total_dialog_accept)
+                    .setNegativeText(R.string.total_dialog_cancel)
+                    .setStyle(Style.HEADER_WITH_ICON)
+                    .setIcon(R.drawable.delete)
+                    .setHeaderColor(R.color.errorRed)
+                    .setCancelable(true)
+                    .withIconAnimation(true)
+                    .withDialogAnimation(true, Duration.FAST)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            viewModel.getTotalOrder().getValue().merge(item.getKey(), item.getValue(), Integer::sum);
+                            viewModel.getClients().getValue().get(groupPosition).getItems().remove(item.getKey());
+                            notifyDataSetChanged();
+                        }
+                    })
+                    .show();
+            return false;
         });
 
         return convertView;

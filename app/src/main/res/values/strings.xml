@@ -23,6 +23,17 @@
     <string name="total_dialog_accept">Yes</string>
     <string name="total_dialog_cancel">No</string>
 
+    <string name="total_spinner_individual">Individual</string>
+    <string name="total_spinner_collective">Collective</string>
+
+    <string name="total_collective_appetizers_caps">APPETIZERS</string>
+    <string name="total_collective_montaditos_caps">MONTADITOS</string>
+    <string name="total_collective_salads_caps">SALADS</string>
+    <string name="total_collective_drinks_caps">DRINKS</string>
+    <string name="total_collective_alcohol_caps">ALCOHOL</string>
+    <string name="total_collective_desserts_caps">DESSERTS</string>
+    <string name="total_collective_total_caps">TOTAL</string>
+
 
 
     <string name="error_noClients">You can\'t perform this action without any clients</string>

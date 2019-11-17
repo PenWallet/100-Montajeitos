@@ -15,17 +15,21 @@ public class SharedViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> isEuromania;
     private MutableLiveData<ArrayList<Person>> clients;
+    private MutableLiveData<HashMap<Item, Integer>> totalOrder;
 
     public SharedViewModel() {
         isEuromania = new MutableLiveData<>(); isEuromania.setValue(true);
         clients = new MutableLiveData<>();
+        totalOrder = new MutableLiveData<>();
 
         clients.setValue(new ArrayList<Person>());
-        clients.getValue().add(new Person("Oscar", new HashMap<Item, Integer>()));
-        clients.getValue().add(new Person("Miguel", new HashMap<Item, Integer>()));
-        clients.getValue().add(new Person("Olga", new HashMap<Item, Integer>()));
-        clients.getValue().add(new Person("Fran", new HashMap<Item, Integer>()));
-        clients.getValue().add(new Person("Triana", new HashMap<Item, Integer>()));
+        clients.getValue().add(new Person("Oscar", new HashMap<>()));
+        clients.getValue().add(new Person("Miguel", new HashMap<>()));
+        clients.getValue().add(new Person("Olga", new HashMap<>()));
+        clients.getValue().add(new Person("Fran", new HashMap<>()));
+        clients.getValue().add(new Person("Triana", new HashMap<>()));
+
+        totalOrder.setValue(new HashMap<>());
     }
 
     public MutableLiveData<Boolean> getIsEuromania() {
@@ -45,5 +49,9 @@ public class SharedViewModel extends ViewModel {
         }
 
         return clientsNames;
+    }
+
+    public MutableLiveData<HashMap<Item, Integer>> getTotalOrder() {
+        return totalOrder;
     }
 }
